@@ -44,7 +44,6 @@ public class TelaEstacionamento extends JFrame {
         historico.setEditable(false);
         add(historico);
 
-        // Ação botão Entrar
         btnEntrar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -67,7 +66,6 @@ public class TelaEstacionamento extends JFrame {
             }
         });
 
-        // Ação botão Sair
         btnSair.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
