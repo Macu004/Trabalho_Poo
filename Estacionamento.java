@@ -10,17 +10,19 @@ public class Estacionamento {
         for (Veiculo veic : vagasOcupadas) {
             if (veic.getPlaca().equalsIgnoreCase(v.getPlaca()) &&
                 veic.getTipo().equalsIgnoreCase(v.getTipo())) {
-                return false;
+                return false; 
             }
         }
         vagasOcupadas.add(v);
         return true;
     }
 
-    public boolean sairVeiculo(String placa, String tipo) {
+    public boolean sairVeiculo(String placa, String tipo, String cidade, String estado) {
         return vagasOcupadas.removeIf(v -> 
-            v.getPlaca().equalsIgnoreCase(placa) && 
-            v.getTipo().equalsIgnoreCase(tipo)
+            v.getPlaca().equalsIgnoreCase(placa) &&
+            v.getTipo().equalsIgnoreCase(tipo) &&
+            v.getCidade().equalsIgnoreCase(cidade) &&
+            v.getEstado().equalsIgnoreCase(estado)
         );
     }
 
