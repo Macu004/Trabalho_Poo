@@ -116,16 +116,19 @@ public class TelaEstacionamento extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String placa = campoPlaca.getText().trim().toUpperCase();
                 String tipo = comboTipo.getSelectedItem().toString();
-                if (placa.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Digite a placa para saída.");
+                String cidade = campoCidade.getText().trim();
+                String estado = campoEstado.getText().trim();
+
+                if (placa.isEmpty() || cidade.isEmpty() || estado.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Digite a placa, cidade e estado para saída.");
                     return;
                 }
 
-                if (estacionamento.sairVeiculo(placa, tipo)) {
+                if (estacionamento.sairVeiculo(placa, tipo, cidade, estado)) {
                     atualizarContagem();
                     historico.append("Veículo " + tipo + " " + placa + " saiu\n");
                 } else {
-                    JOptionPane.showMessageDialog(null, "Veículo não encontrado ou tipo incorreto.");
+                    JOptionPane.showMessageDialog(null, "Veículo não encontrado ou dados incorretos.");
                 }
             }
         });
