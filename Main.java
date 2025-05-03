@@ -1,5 +1,10 @@
+import javax.swing.SwingUtilities;
+
 public class Main {
     public static void main(String[] args) {
-        new TelaEstacionamento();
+        SwingUtilities.invokeLater(() -> {
+            TelaEstacionamento tela = new TelaEstacionamento();
+            tela.setVisible(true);
+        });
     }
 }
