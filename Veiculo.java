@@ -1,7 +1,9 @@
+
 import java.io.Serializable;
 import java.util.Date;
 
 public class Veiculo implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     private String placa;
@@ -19,6 +21,7 @@ public class Veiculo implements Serializable {
         this.cidade = cidade;
         this.estado = estado;
     }
+
     public String getPlaca() {
         return placa;
     }
