@@ -80,7 +80,7 @@ public class TelaEstacionamento extends JFrame {
         JScrollPane scrollHistorico = new JScrollPane(historicoArea);
         scrollHistorico.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.GRAY),
                 "Histórico de Veículos", 0, 0,
-                new Font("SansSerif", Font.BOLD, 14), Color.WHITE));
+                new Font("SansSerif", Font.BOLD, 14), Color.BLACK));
         scrollHistorico.getViewport().setBackground(new Color(35, 35, 45));
 
         JPanel rodape = new JPanel(new FlowLayout(FlowLayout.LEFT));
