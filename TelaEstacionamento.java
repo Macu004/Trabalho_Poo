@@ -1,6 +1,5 @@
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import javax.swing.*;
 
 public class TelaEstacionamento extends JFrame {
     private Estacionamento estacionamento;
@@ -11,54 +10,107 @@ public class TelaEstacionamento extends JFrame {
 
     public TelaEstacionamento() {
         estacionamento = new Estacionamento();
-
-        setTitle("Sistema de Estacionamento");
-        setSize(600, 500);
+        setTitle("Monitoramento de Entrada e Saída de Veículos");
+        setSize(650, 580);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+        setLayout(new BorderLayout(10, 10));
+        getContentPane().setBackground(new Color(30, 30, 40));
 
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(8, 2));
+        // Painel principal para os dados do veículo
+        JPanel painelDados = new JPanel(new GridBagLayout());
+        painelDados.setBackground(new Color(45, 45, 60));
+        painelDados.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.GRAY),
+                "Dados do Veículo", 0, 0,
+                new Font("SansSerif", Font.BOLD, 14), Color.WHITE));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        panel.add(new JLabel("Placa:"));
+        // Campos e rótulos
         placaField = new JTextField();
-        panel.add(placaField);
-
-        panel.add(new JLabel("Modelo:"));
         modeloField = new JTextField();
-        panel.add(modeloField);
-
-        panel.add(new JLabel("Tipo:"));
-        tipoCombo = new JComboBox<>(new String[]{"Carro", "Moto", "Caminhão"});
-        panel.add(tipoCombo);
-
-        panel.add(new JLabel("Cidade:"));
         cidadeField = new JTextField();
-        panel.add(cidadeField);
-
-        panel.add(new JLabel("Estado:"));
         estadoField = new JTextField();
-        panel.add(estadoField);
+        tipoCombo = new JComboBox<>(new String[]{"Carro", "Moto", "Caminhão"});
 
-        JButton adicionarBtn = new JButton("Adicionar Veículo");
-        JButton removerBtn = new JButton("Remover Veículo");
-        panel.add(adicionarBtn);
-        panel.add(removerBtn);
+        JLabel lblPlaca = criarLabel("Placa:");
+        JLabel lblModelo = criarLabel("Modelo:");
+        JLabel lblTipo = criarLabel("Tipo:");
+        JLabel lblEstado = criarLabel("Estado:");
+        JLabel lblCidade = criarLabel("Cidade:");
 
-        vagasLabel = new JLabel("Vagas disponíveis: " + estacionamento.getVagasDisponiveis());
-        panel.add(vagasLabel);
+        // Adicionando campos ao painel em ordem correta
+        gbc.gridx = 0; gbc.gridy = 0;
+        painelDados.add(lblPlaca, gbc);
+        gbc.gridx = 1;
+        painelDados.add(placaField, gbc);
 
-        historicoArea = new JTextArea();
+        gbc.gridx = 0; gbc.gridy = 1;
+        painelDados.add(lblModelo, gbc);
+        gbc.gridx = 1;
+        painelDados.add(modeloField, gbc);
+
+        gbc.gridx = 0; gbc.gridy = 2;
+        painelDados.add(lblTipo, gbc);
+        gbc.gridx = 1;
+        painelDados.add(tipoCombo, gbc);
+
+        gbc.gridx = 0; gbc.gridy = 3;
+        painelDados.add(lblEstado, gbc);
+        gbc.gridx = 1;
+        painelDados.add(estadoField, gbc);
+
+        gbc.gridx = 0; gbc.gridy = 4;
+        painelDados.add(lblCidade, gbc);
+        gbc.gridx = 1;
+        painelDados.add(cidadeField, gbc);
+
+        // Botões
+        JButton btnAdicionar = new JButton("Adicionar");
+        JButton btnRemover = new JButton("Remover");
+
+        gbc.gridx = 0; gbc.gridy = 5;
+        painelDados.add(btnAdicionar, gbc);
+        gbc.gridx = 1;
+        painelDados.add(btnRemover, gbc);
+
+        // Painel de histórico
+        historicoArea = new JTextArea(10, 40);
         historicoArea.setEditable(false);
-        JScrollPane scroll = new JScrollPane(historicoArea);
+        historicoArea.setFont(new Font("Monospaced", Font.PLAIN, 12));
+        historicoArea.setBackground(new Color(35, 35, 45));
+        historicoArea.setForeground(Color.WHITE);
 
-        add(panel, BorderLayout.NORTH);
-        add(scroll, BorderLayout.CENTER);
+        JScrollPane scrollHistorico = new JScrollPane(historicoArea);
+        scrollHistorico.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.GRAY),
+                "Histórico de Veículos", 0, 0,
+                new Font("SansSerif", Font.BOLD, 14), Color.WHITE));
+        scrollHistorico.getViewport().setBackground(new Color(35, 35, 45));
 
-        adicionarBtn.addActionListener(e -> adicionarVeiculo());
-        removerBtn.addActionListener(e -> removerVeiculo());
+        // Rodapé
+        JPanel rodape = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        rodape.setBackground(new Color(30, 30, 40));
+        vagasLabel = new JLabel("Vagas disponíveis: " + estacionamento.getVagasDisponiveis());
+        vagasLabel.setForeground(Color.WHITE);
+        rodape.add(vagasLabel);
+
+        // Adiciona painéis à tela
+        add(painelDados, BorderLayout.NORTH);
+        add(scrollHistorico, BorderLayout.CENTER);
+        add(rodape, BorderLayout.SOUTH);
+
+        // Ações dos botões
+        btnAdicionar.addActionListener(e -> adicionarVeiculo());
+        btnRemover.addActionListener(e -> removerVeiculo());
 
         atualizarHistorico();
+    }
+
+    private JLabel criarLabel(String texto) {
+        JLabel label = new JLabel(texto);
+        label.setForeground(Color.WHITE);
+        return label;
     }
 
     private void adicionarVeiculo() {
@@ -69,7 +121,7 @@ public class TelaEstacionamento extends JFrame {
         String estado = estadoField.getText().trim();
 
         if (placa.isEmpty() || modelo.isEmpty() || cidade.isEmpty() || estado.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Todos os campos devem ser preenchidos.");
+            JOptionPane.showMessageDialog(this, "Preencha todos os campos.");
             return;
         }
 
@@ -77,26 +129,30 @@ public class TelaEstacionamento extends JFrame {
         boolean sucesso = estacionamento.adicionarVeiculo(veiculo);
 
         if (sucesso) {
-            JOptionPane.showMessageDialog(this, "Veículo adicionado com sucesso.");
+            JOptionPane.showMessageDialog(this, "Veículo adicionado com sucesso!");
+            limparCampos();
         } else {
-            JOptionPane.showMessageDialog(this, "Erro ao adicionar. Verifique se a placa já está cadastrada ou se o limite foi atingido.");
+            JOptionPane.showMessageDialog(this, "Não foi possível adicionar o veículo.");
         }
+
         atualizarHistorico();
     }
 
     private void removerVeiculo() {
         String placa = placaField.getText().trim();
         if (placa.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Informe a placa para remover o veículo.");
+            JOptionPane.showMessageDialog(this, "Informe a placa para remover.");
             return;
         }
 
         Veiculo removido = estacionamento.removerVeiculoPorPlaca(placa);
         if (removido != null) {
-            JOptionPane.showMessageDialog(this, "Veículo removido com sucesso.");
+            JOptionPane.showMessageDialog(this, "Veículo removido.");
+            limparCampos();
         } else {
             JOptionPane.showMessageDialog(this, "Veículo não encontrado.");
         }
+
         atualizarHistorico();
     }
 
@@ -104,4 +160,12 @@ public class TelaEstacionamento extends JFrame {
         historicoArea.setText(estacionamento.gerarHistoricoComData());
         vagasLabel.setText("Vagas disponíveis: " + estacionamento.getVagasDisponiveis());
     }
-} 
+
+    private void limparCampos() {
+        placaField.setText("");
+        modeloField.setText("");
+        cidadeField.setText("");
+        estadoField.setText("");
+        tipoCombo.setSelectedIndex(0);
+    }
+}
