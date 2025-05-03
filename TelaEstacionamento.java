@@ -17,7 +17,6 @@ public class TelaEstacionamento extends JFrame {
         setLayout(new BorderLayout(10, 10));
         getContentPane().setBackground(new Color(30, 30, 40));
 
-        // Painel principal para os dados do veículo
         JPanel painelDados = new JPanel(new GridBagLayout());
         painelDados.setBackground(new Color(45, 45, 60));
         painelDados.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.GRAY),
@@ -27,7 +26,6 @@ public class TelaEstacionamento extends JFrame {
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // Campos e rótulos
         placaField = new JTextField();
         modeloField = new JTextField();
         cidadeField = new JTextField();
@@ -40,7 +38,6 @@ public class TelaEstacionamento extends JFrame {
         JLabel lblEstado = criarLabel("Estado:");
         JLabel lblCidade = criarLabel("Cidade:");
 
-        // Adicionando campos ao painel em ordem correta
         gbc.gridx = 0; gbc.gridy = 0;
         painelDados.add(lblPlaca, gbc);
         gbc.gridx = 1;
@@ -66,7 +63,6 @@ public class TelaEstacionamento extends JFrame {
         gbc.gridx = 1;
         painelDados.add(cidadeField, gbc);
 
-        // Botões
         JButton btnAdicionar = new JButton("Adicionar");
         JButton btnRemover = new JButton("Remover");
 
@@ -75,7 +71,6 @@ public class TelaEstacionamento extends JFrame {
         gbc.gridx = 1;
         painelDados.add(btnRemover, gbc);
 
-        // Painel de histórico
         historicoArea = new JTextArea(10, 40);
         historicoArea.setEditable(false);
         historicoArea.setFont(new Font("Monospaced", Font.PLAIN, 12));
@@ -88,19 +83,16 @@ public class TelaEstacionamento extends JFrame {
                 new Font("SansSerif", Font.BOLD, 14), Color.WHITE));
         scrollHistorico.getViewport().setBackground(new Color(35, 35, 45));
 
-        // Rodapé
         JPanel rodape = new JPanel(new FlowLayout(FlowLayout.LEFT));
         rodape.setBackground(new Color(30, 30, 40));
         vagasLabel = new JLabel("Vagas disponíveis: " + estacionamento.getVagasDisponiveis());
         vagasLabel.setForeground(Color.WHITE);
         rodape.add(vagasLabel);
 
-        // Adiciona painéis à tela
         add(painelDados, BorderLayout.NORTH);
         add(scrollHistorico, BorderLayout.CENTER);
         add(rodape, BorderLayout.SOUTH);
 
-        // Ações dos botões
         btnAdicionar.addActionListener(e -> adicionarVeiculo());
         btnRemover.addActionListener(e -> removerVeiculo());
 
